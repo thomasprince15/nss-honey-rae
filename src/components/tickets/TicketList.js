@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./Tickets.css"
+import { Ticket } from "./Ticket"
 
 export const TicketList = ({ searchTermState }) => {
     const [tickets, setTickets] = useState([])
@@ -15,10 +16,10 @@ export const TicketList = ({ searchTermState }) => {
     useEffect(
         () => {
             console.log(searchTermState)
-          const searchedTickets = tickets.filter(ticket => ticket.description.startsWith(searchTermState))
-          setFiltered(searchedTickets)  
+            const searchedTickets = tickets.filter(ticket => ticket.description.startsWith(searchTermState))
+            setFiltered(searchedTickets)
         },
-        [ searchTermState ]
+        [searchTermState]
     )
 
     useEffect(
@@ -93,11 +94,7 @@ export const TicketList = ({ searchTermState }) => {
         <article className="tickets">
             {
                 filteredTickets.map(
-                    (ticket) => {
-                        return <section className="ticket">
-                            <header>{ticket.description}</header>
-                            <footer>Emergency: {ticket.emergency ? "YES" : "No"}</footer></section>
-                    }
+                    (ticket) => <Ticket isStaff={honeyUserObject.staff} ticketObject={ticket} />
                 )
             }
         </article>
